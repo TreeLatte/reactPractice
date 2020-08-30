@@ -2,6 +2,7 @@ const express = require("express"); //express 모듈을 가져옴
 const app = express(); //펑션을 이용해서 익스프레스 앱을 만듬
 const port = 5000; //서버 포트인데 상관 없음.
 const bodyParser = require("body-parser");
+const config = require("./config/key");
 const { User } = require("./models/User");
 
 //application/x-www-form-urlencoded의 데이터를 분석해서 가져오게 한다.
@@ -11,15 +12,12 @@ app.use(bodyParser.json());
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://jjh8623:ghktn10137@treelatte.f2wxo.mongodb.net/test?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
